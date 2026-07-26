@@ -232,32 +232,31 @@ document.addEventListener('DOMContentLoaded', () => {
   async function applyDynamicConfig() {
     let globalCfg = {};
 
-    // 1. Primary Config: site_config.json (Fast, static, 100% reliable)
+    // 1. Direct Vercel Cloud Database API (Direct, live, 0-manual-upload sync on Vercel)
     try {
-      const res = await fetch('site_config.json?v=' + Date.now());
-      if (res.ok) {
-        globalCfg = await res.json();
-      }
-    } catch (err) {}
-
-    // 2. Cloud Database Sync (if custom Bin ID configured)
-    const savedBin = localStorage.getItem('serenity_cloud_bin');
-    if (savedBin) {
-      try {
-        const savedKey = localStorage.getItem('serenity_cloud_key') || '$2a$10$7Z8H19o9.X7a/WpG1pE30.fD';
-        const cloudRes = await fetch(`https://api.jsonbin.io/v3/b/${savedBin}/latest`, {
-          headers: { 'X-Master-Key': savedKey }
-        });
-        if (cloudRes.ok) {
-          const cloudData = await cloudRes.json();
-          if (cloudData.record) globalCfg = { ...globalCfg, ...cloudData.record };
+      const vercelRes = await fetch('/api/config');
+      if (vercelRes.ok) {
+        const vercelData = await vercelRes.json();
+        if (vercelData && Object.keys(vercelData).length > 0) {
+          globalCfg = vercelData;
         }
-      } catch (e) {}
+      }
+    } catch (e) {}
+
+    // 2. Fallback Config: site_config.json
+    if (!globalCfg || !Object.keys(globalCfg).length) {
+      try {
+        const res = await fetch('site_config.json?v=' + Date.now());
+        if (res.ok) {
+          globalCfg = await res.json();
+        }
+      } catch (err) {}
     }
 
     const raw = localStorage.getItem(CONFIG_KEY);
     const localCfg = raw ? JSON.parse(raw) : {};
-    const cfg = { ...DEFAULT_CONFIG, ...globalCfg, ...localCfg };
+    // Server-fetched globalCfg (site_config.json) takes top priority so all devices receive live updates!
+    const cfg = { ...DEFAULT_CONFIG, ...localCfg, ...globalCfg };
 
     // Update Brand Name everywhere
     const brandName = cfg.brand_name || 'Serenity Spa';

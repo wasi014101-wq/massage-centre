@@ -247,34 +247,21 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   async function pushToCloudDatabase(currentConfig) {
-    const binId = document.getElementById('cfg-cloud-bin-id')?.value.trim() || localStorage.getItem('serenity_cloud_bin');
-    const key = document.getElementById('cfg-cloud-master-key')?.value.trim() || localStorage.getItem('serenity_cloud_key');
-
-    if (!binId) {
-      showToast('✅ Settings saved! Click "Export site_config.json" to publish changes live to Vercel.');
-      return;
-    }
-
-    localStorage.setItem('serenity_cloud_bin', binId);
-    if (key) localStorage.setItem('serenity_cloud_key', key);
-
+    // Direct Vercel Cloud Sync (0 manual uploads required!)
     try {
-      const res = await fetch(`https://api.jsonbin.io/v3/b/${binId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          ...(key ? { 'X-Master-Key': key } : {})
-        },
+      const vercelRes = await fetch('/api/config', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(currentConfig)
       });
-      if (res.ok) {
-        showToast('☁️ SAVED TO CLOUD DATABASE! All visitors across all devices will see your updates live.');
-      } else {
-        showToast('✅ Saved locally! Click "Export site_config.json" to publish changes live to Vercel.');
+
+      if (vercelRes.ok) {
+        showToast('🚀 DIRECTLY SAVED TO VERCEL CLOUD! All devices & visitors worldwide updated instantly.');
+        return;
       }
-    } catch (e) {
-      showToast('✅ Saved locally! Click "Export site_config.json" to publish changes live to Vercel.');
-    }
+    } catch (e) {}
+
+    showToast('✅ Saved locally! Click "Export site_config.json" to sync manually if offline.');
   }
 
   async function saveConfigFromForm() {
