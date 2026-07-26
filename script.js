@@ -369,6 +369,19 @@ document.addEventListener('DOMContentLoaded', () => {
     alert(`Account saved for ${accData.name}! Your details will pre-fill when booking via WhatsApp.`);
   });
 
+  // ---- Auto-lift WhatsApp button when footer is reached ----
+  const footerEl = document.querySelector('footer');
+  const waFloat = document.querySelector('.whatsapp-float');
+
+  if (footerEl && waFloat) {
+    const footerObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        waFloat.classList.toggle('footer-active', entry.isIntersecting);
+      });
+    }, { threshold: 0.05 });
+    footerObserver.observe(footerEl);
+  }
+
   applyDynamicConfig();
 });
 
