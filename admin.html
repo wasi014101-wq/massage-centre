@@ -194,10 +194,15 @@
               <label for="cfg-stat-therapists">Expert Therapists</label>
               <input type="number" id="cfg-stat-therapists" placeholder="15">
             </div>
-            <div class="form-group">
-              <label for="cfg-stat-services">Service Types Count</label>
-              <input type="number" id="cfg-stat-services" placeholder="8">
-            </div>
+          <hr class="admin-divider">
+          <h4>About Us Section Content</h4>
+          <div class="form-group">
+            <label for="cfg-about-title">About Us Headline</label>
+            <input type="text" id="cfg-about-title" placeholder="Riyadh's Premier Wellness & Massage Destination">
+          </div>
+          <div class="form-group">
+            <label for="cfg-about-desc">About Us Main Description</label>
+            <textarea id="cfg-about-desc" rows="3" placeholder="Enter About Us paragraph..."></textarea>
           </div>
         </div>
       </section>
@@ -206,49 +211,93 @@
       <section class="admin-tab-content" id="tab-pricing">
         <div class="admin-card">
           <div class="admin-card-header">
-            <h3>Massage Services Pricing & Images</h3>
-            <p>Adjust pricing numbers (in SAR) and service image paths/URLs.</p>
+            <h3>Massage Services Titles, Descriptions, Prices & Images</h3>
+            <p>Full control over service titles, descriptions, pricing numbers (SAR), and service image paths/URLs.</p>
           </div>
           <div class="admin-grid-2">
             <div class="form-group">
-              <label for="cfg-price-swedish">Swedish Massage Price (SAR)</label>
-              <input type="text" id="cfg-price-swedish" placeholder="e.g. 250 SAR / 60 min">
+              <label for="cfg-title-swedish">Swedish Massage Title</label>
+              <input type="text" id="cfg-title-swedish" placeholder="Swedish Relaxation Massage">
             </div>
             <div class="form-group">
-              <label for="cfg-img-swedish">Swedish Massage Image (Path / URL)</label>
-              <input type="text" id="cfg-img-swedish" placeholder="e.g. images/swedish.png or https://...">
+              <label for="cfg-desc-swedish">Swedish Massage Description</label>
+              <input type="text" id="cfg-desc-swedish" placeholder="Gentle, long gliding strokes...">
+            </div>
+            <div class="form-group">
+              <label for="cfg-price-swedish">Swedish Price (SAR)</label>
+              <input type="text" id="cfg-price-swedish" placeholder="250 SAR / 60 min">
+            </div>
+            <div class="form-group">
+              <label for="cfg-img-swedish">Swedish Image (Path / URL)</label>
+              <input type="text" id="cfg-img-swedish" placeholder="images/swedish.png">
+            </div>
+
+            <div class="form-group">
+              <label for="cfg-title-deeptissue">Deep Tissue Title</label>
+              <input type="text" id="cfg-title-deeptissue" placeholder="Deep Tissue Therapy">
+            </div>
+            <div class="form-group">
+              <label for="cfg-desc-deeptissue">Deep Tissue Description</label>
+              <input type="text" id="cfg-desc-deeptissue" placeholder="Targets deep muscle layers...">
             </div>
             <div class="form-group">
               <label for="cfg-price-deeptissue">Deep Tissue Price (SAR)</label>
-              <input type="text" id="cfg-price-deeptissue" placeholder="e.g. 300 SAR / 60 min">
+              <input type="text" id="cfg-price-deeptissue" placeholder="300 SAR / 60 min">
             </div>
             <div class="form-group">
               <label for="cfg-img-deeptissue">Deep Tissue Image (Path / URL)</label>
-              <input type="text" id="cfg-img-deeptissue" placeholder="e.g. images/deep-tissue.png or https://...">
+              <input type="text" id="cfg-img-deeptissue" placeholder="images/deep-tissue.png">
+            </div>
+
+            <div class="form-group">
+              <label for="cfg-title-thai">Thai Massage Title</label>
+              <input type="text" id="cfg-title-thai" placeholder="Traditional Thai Massage">
+            </div>
+            <div class="form-group">
+              <label for="cfg-desc-thai">Thai Massage Description</label>
+              <input type="text" id="cfg-desc-thai" placeholder="Invigorating combination of rhythmic pressing...">
             </div>
             <div class="form-group">
               <label for="cfg-price-thai">Thai Massage Price (SAR)</label>
-              <input type="text" id="cfg-price-thai" placeholder="e.g. 280 SAR / 60 min">
+              <input type="text" id="cfg-price-thai" placeholder="280 SAR / 60 min">
             </div>
             <div class="form-group">
               <label for="cfg-img-thai">Thai Massage Image (Path / URL)</label>
-              <input type="text" id="cfg-img-thai" placeholder="e.g. images/thai.png or https://...">
+              <input type="text" id="cfg-img-thai" placeholder="images/thai.png">
+            </div>
+
+            <div class="form-group">
+              <label for="cfg-title-sports">Sports Massage Title</label>
+              <input type="text" id="cfg-title-sports" placeholder="Sports Recovery Massage">
+            </div>
+            <div class="form-group">
+              <label for="cfg-desc-sports">Sports Massage Description</label>
+              <input type="text" id="cfg-desc-sports" placeholder="Tailored for active individuals...">
             </div>
             <div class="form-group">
               <label for="cfg-price-sports">Sports Massage Price (SAR)</label>
-              <input type="text" id="cfg-price-sports" placeholder="e.g. 280 SAR / 60 min">
+              <input type="text" id="cfg-price-sports" placeholder="280 SAR / 60 min">
             </div>
             <div class="form-group">
               <label for="cfg-img-sports">Sports Massage Image (Path / URL)</label>
-              <input type="text" id="cfg-img-sports" placeholder="e.g. images/sports.png or https://...">
+              <input type="text" id="cfg-img-sports" placeholder="images/sports.png">
+            </div>
+
+            <div class="form-group">
+              <label for="cfg-title-couples">Couples Package Title</label>
+              <input type="text" id="cfg-title-couples" placeholder="Couples Massage Package">
+            </div>
+            <div class="form-group">
+              <label for="cfg-desc-couples">Couples Package Description</label>
+              <input type="text" id="cfg-desc-couples" placeholder="Share a relaxing side-by-side session...">
             </div>
             <div class="form-group">
               <label for="cfg-price-couples">Couples Package Price (SAR)</label>
-              <input type="text" id="cfg-price-couples" placeholder="e.g. 550 SAR / 90 min">
+              <input type="text" id="cfg-price-couples" placeholder="550 SAR / 90 min">
             </div>
             <div class="form-group">
               <label for="cfg-img-couples">Couples Package Image (Path / URL)</label>
-              <input type="text" id="cfg-img-couples" placeholder="e.g. images/couples.png or https://...">
+              <input type="text" id="cfg-img-couples" placeholder="images/couples.png">
             </div>
           </div>
         </div>
@@ -263,12 +312,19 @@
           </div>
           <div class="admin-grid-2">
             <div class="form-group">
-              <label for="cfg-new-passcode">New Passcode</label>
-              <input type="password" id="cfg-new-passcode" placeholder="Enter new passcode (min 6 characters)">
+          <hr class="admin-divider">
+          <div class="admin-card-header">
+            <h3>☁️ Cloud Database & Realtime Live Sync</h3>
+            <p>Sync all passcode, Centre Name, service images, and pricing changes instantly across all devices worldwide.</p>
+          </div>
+          <div class="admin-grid-2">
+            <div class="form-group">
+              <label for="cfg-cloud-bin-id">Cloud Database Bin ID</label>
+              <input type="text" id="cfg-cloud-bin-id" placeholder="Auto-configured cloud database">
             </div>
             <div class="form-group">
-              <label for="cfg-confirm-passcode">Confirm Passcode</label>
-              <input type="password" id="cfg-confirm-passcode" placeholder="Confirm new passcode">
+              <label for="cfg-cloud-master-key">Cloud Access Key</label>
+              <input type="password" id="cfg-cloud-master-key" placeholder="Auto-configured access key">
             </div>
           </div>
         </div>

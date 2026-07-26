@@ -226,15 +226,31 @@ document.addEventListener('DOMContentLoaded', () => {
     stat_services: 8
   };
 
+  const CLOUD_BIN_DEFAULT = '6699d8e7e41b4d34e414c5b1';
+  const CLOUD_KEY_DEFAULT = '$2a$10$7Z8H19o9.X7a/WpG1pE30.fD';
+
   async function applyDynamicConfig() {
     let globalCfg = {};
+
+    // 1. Try Cloud Database Sync (Live across all devices worldwide)
     try {
-      const res = await fetch('site_config.json?v=' + Date.now());
-      if (res.ok) {
-        globalCfg = await res.json();
+      const savedBin = localStorage.getItem('serenity_cloud_bin') || CLOUD_BIN_DEFAULT;
+      const savedKey = localStorage.getItem('serenity_cloud_key') || CLOUD_KEY_DEFAULT;
+      const cloudRes = await fetch(`https://api.jsonbin.io/v3/b/${savedBin}/latest`, {
+        headers: { 'X-Master-Key': savedKey }
+      });
+      if (cloudRes.ok) {
+        const cloudData = await cloudRes.json();
+        globalCfg = cloudData.record || {};
       }
     } catch (e) {
-      // Fallback if site_config.json is missing or offline
+      // 2. Fallback to site_config.json
+      try {
+        const res = await fetch('site_config.json?v=' + Date.now());
+        if (res.ok) {
+          globalCfg = await res.json();
+        }
+      } catch (err) {}
     }
 
     const raw = localStorage.getItem(CONFIG_KEY);
@@ -308,6 +324,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const hoursText = document.querySelector('[data-site-key="hours_text"]');
     if (hoursText && cfg.hours) hoursText.textContent = cfg.hours;
 
+    // Update About Us Section
+    const aboutTitle = document.querySelector('[data-site-key="about_title"]');
+    if (aboutTitle && cfg.about_title) aboutTitle.innerHTML = cfg.about_title;
+
+    const aboutDesc = document.querySelector('[data-site-key="about_desc"]');
+    if (aboutDesc && cfg.about_desc) aboutDesc.textContent = cfg.about_desc;
+
     // Update Hero Content
     const heroTitle = document.querySelector('.hero-title');
     if (heroTitle && cfg.hero_title) heroTitle.innerHTML = cfg.hero_title;
@@ -328,21 +351,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const servicesStat = document.querySelector('.hero-stat-number[data-target="8"], .hero-stat-number:nth-child(4)');
     if (servicesStat && cfg.stat_services) servicesStat.dataset.target = cfg.stat_services;
 
-    // Update Service Card Images
-    const imgSwedish = document.querySelector('img[data-service-img="swedish"]');
-    if (imgSwedish && cfg.img_swedish) imgSwedish.src = cfg.img_swedish;
+    // Update Service Titles, Descriptions, Prices & Images
+    ['swedish', 'deeptissue', 'thai', 'sports', 'couples'].forEach(key => {
+      const imgEl = document.querySelector(`img[data-service-img="${key}"]`);
+      if (imgEl && cfg[`img_${key}`]) imgEl.src = cfg[`img_${key}`];
 
-    const imgDeeptissue = document.querySelector('img[data-service-img="deeptissue"]');
-    if (imgDeeptissue && cfg.img_deeptissue) imgDeeptissue.src = cfg.img_deeptissue;
+      const titleEl = document.querySelector(`[data-service-title="${key}"]`);
+      if (titleEl && cfg[`title_${key}`]) titleEl.textContent = cfg[`title_${key}`];
 
-    const imgThai = document.querySelector('img[data-service-img="thai"]');
-    if (imgThai && cfg.img_thai) imgThai.src = cfg.img_thai;
+      const descEl = document.querySelector(`[data-service-desc="${key}"]`);
+      if (descEl && cfg[`desc_${key}`]) descEl.textContent = cfg[`desc_${key}`];
 
-    const imgSports = document.querySelector('img[data-service-img="sports"]');
-    if (imgSports && cfg.img_sports) imgSports.src = cfg.img_sports;
-
-    const imgCouples = document.querySelector('img[data-service-img="couples"]');
-    if (imgCouples && cfg.img_couples) imgCouples.src = cfg.img_couples;
+      const priceEl = document.querySelector(`[data-service-price="${key}"]`);
+      if (priceEl && cfg[`price_${key}`]) priceEl.textContent = cfg[`price_${key}`];
+    });
   }
 
   // ---- CUSTOMER ACCOUNT MODAL CONTROLLER ----
