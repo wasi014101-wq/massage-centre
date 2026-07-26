@@ -246,32 +246,34 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
   }
 
-  const CLOUD_BIN_DEFAULT = '6699d8e7e41b4d34e414c5b1';
-  const CLOUD_KEY_DEFAULT = '$2a$10$7Z8H19o9.X7a/WpG1pE30.fD';
-
   async function pushToCloudDatabase(currentConfig) {
-    const binId = document.getElementById('cfg-cloud-bin-id')?.value.trim() || localStorage.getItem('serenity_cloud_bin') || CLOUD_BIN_DEFAULT;
-    const key = document.getElementById('cfg-cloud-master-key')?.value.trim() || localStorage.getItem('serenity_cloud_key') || CLOUD_KEY_DEFAULT;
+    const binId = document.getElementById('cfg-cloud-bin-id')?.value.trim() || localStorage.getItem('serenity_cloud_bin');
+    const key = document.getElementById('cfg-cloud-master-key')?.value.trim() || localStorage.getItem('serenity_cloud_key');
+
+    if (!binId) {
+      showToast('✅ Settings saved! Click "Export site_config.json" to publish changes live to Vercel.');
+      return;
+    }
 
     localStorage.setItem('serenity_cloud_bin', binId);
-    localStorage.setItem('serenity_cloud_key', key);
+    if (key) localStorage.setItem('serenity_cloud_key', key);
 
     try {
       const res = await fetch(`https://api.jsonbin.io/v3/b/${binId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'X-Master-Key': key
+          ...(key ? { 'X-Master-Key': key } : {})
         },
         body: JSON.stringify(currentConfig)
       });
       if (res.ok) {
         showToast('☁️ SAVED TO CLOUD DATABASE! All visitors across all devices will see your updates live.');
       } else {
-        showToast('✅ Saved locally. Click "Export site_config.json" to sync manually if offline.');
+        showToast('✅ Saved locally! Click "Export site_config.json" to publish changes live to Vercel.');
       }
     } catch (e) {
-      showToast('✅ Saved locally.');
+      showToast('✅ Saved locally! Click "Export site_config.json" to publish changes live to Vercel.');
     }
   }
 

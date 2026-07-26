@@ -232,25 +232,27 @@ document.addEventListener('DOMContentLoaded', () => {
   async function applyDynamicConfig() {
     let globalCfg = {};
 
-    // 1. Try Cloud Database Sync (Live across all devices worldwide)
+    // 1. Primary Config: site_config.json (Fast, static, 100% reliable)
     try {
-      const savedBin = localStorage.getItem('serenity_cloud_bin') || CLOUD_BIN_DEFAULT;
-      const savedKey = localStorage.getItem('serenity_cloud_key') || CLOUD_KEY_DEFAULT;
-      const cloudRes = await fetch(`https://api.jsonbin.io/v3/b/${savedBin}/latest`, {
-        headers: { 'X-Master-Key': savedKey }
-      });
-      if (cloudRes.ok) {
-        const cloudData = await cloudRes.json();
-        globalCfg = cloudData.record || {};
+      const res = await fetch('site_config.json?v=' + Date.now());
+      if (res.ok) {
+        globalCfg = await res.json();
       }
-    } catch (e) {
-      // 2. Fallback to site_config.json
+    } catch (err) {}
+
+    // 2. Cloud Database Sync (if custom Bin ID configured)
+    const savedBin = localStorage.getItem('serenity_cloud_bin');
+    if (savedBin) {
       try {
-        const res = await fetch('site_config.json?v=' + Date.now());
-        if (res.ok) {
-          globalCfg = await res.json();
+        const savedKey = localStorage.getItem('serenity_cloud_key') || '$2a$10$7Z8H19o9.X7a/WpG1pE30.fD';
+        const cloudRes = await fetch(`https://api.jsonbin.io/v3/b/${savedBin}/latest`, {
+          headers: { 'X-Master-Key': savedKey }
+        });
+        if (cloudRes.ok) {
+          const cloudData = await cloudRes.json();
+          if (cloudData.record) globalCfg = { ...globalCfg, ...cloudData.record };
         }
-      } catch (err) {}
+      } catch (e) {}
     }
 
     const raw = localStorage.getItem(CONFIG_KEY);
