@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin Dashboard — Centre Information Manager</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Main Stylesheet & Admin Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="admin-body">
+
+  <!-- Admin Main Dashboard Wrapper -->
+  <div class="admin-wrapper" id="admin-wrapper">
+    
+    <!-- Sidebar Header -->
+    <header class="admin-header">
+      <div class="container admin-header-content">
+        <div class="admin-brand">
+          <svg viewBox="0 0 36 36" fill="none" class="brand-icon">
+            <circle cx="18" cy="18" r="16" stroke="currentColor" stroke-width="1.5" />
+            <path d="M18 8C18 8 12 14 12 20C12 23.3 14.7 26 18 26C21.3 26 24 23.3 24 20C24 14 18 8 18 8Z"
+              fill="currentColor" opacity="0.6" />
+          </svg>
+          <div>
+            <h1>Admin Control Panel</h1>
+            <span>Manage Public Information, Brand Name & Booking Settings</span>
+          </div>
+        </div>
+        <div class="admin-header-actions">
+          <a href="index.html" target="_blank" class="btn btn--secondary btn--small">🌐 Open Website</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="container admin-main">
+      
+      <!-- Top Action Alert Bar -->
+      <div class="admin-status-toast" id="admin-status-toast" style="display: none;">
+        <span id="toast-message">Settings saved successfully!</span>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="admin-tabs">
+        <button class="admin-tab active" data-tab="tab-brand">🏨 Centre Name & Contact</button>
+        <button class="admin-tab" data-tab="tab-promo">🏷️ Announcement Banner</button>
+        <button class="admin-tab" data-tab="tab-hero">📊 Hero & Stat Numbers</button>
+        <button class="admin-tab" data-tab="tab-pricing">💆 Services & Pricing</button>
+      </nav>
+
+      <!-- TAB 1: BRAND NAME & CONTACT -->
+      <section class="admin-tab-content active" id="tab-brand">
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3>Centre / Business Name & Contact Info</h3>
+            <p>Change the name of your Spa/Centre and update contact details visible to customers.</p>
+          </div>
+          <div class="form-group">
+            <label for="cfg-brand-name">Centre / Spa Name</label>
+            <input type="text" id="cfg-brand-name" placeholder="e.g. Serenity Spa (or any name you choose)">
+            <small>This name updates the website header logo, titles, footer branding, and meta text instantly.</small>
+          </div>
+          <hr class="admin-divider">
+          <div class="admin-grid-2">
+            <div class="form-group">
+              <label for="cfg-whatsapp">WhatsApp Phone Number (with Country Code)</label>
+              <input type="text" id="cfg-whatsapp" placeholder="e.g. 966501234567">
+              <small>Digits only without '+' or spaces (e.g., <code>966501234567</code> for Saudi Arabia).</small>
+            </div>
+            <div class="form-group">
+              <label for="cfg-phone-display">Display Phone Number</label>
+              <input type="text" id="cfg-phone-display" placeholder="e.g. +966 50 123 4567">
+              <small>Formatted phone number shown on the site.</small>
+            </div>
+            <div class="form-group">
+              <label for="cfg-address">Business Address / Location</label>
+              <input type="text" id="cfg-address" placeholder="e.g. Olaya Street, Riyadh, Saudi Arabia">
+            </div>
+            <div class="form-group">
+              <label for="cfg-hours">Operating Hours</label>
+              <input type="text" id="cfg-hours" placeholder="e.g. Daily: 10 AM – 12 AM">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: PROMO ANNOUNCEMENT BANNER -->
+      <section class="admin-tab-content" id="tab-promo">
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3>Top Announcement & Special Offer Banner</h3>
+            <p>Highlight special discounts, holiday offers, or announcements at the very top of the site.</p>
+          </div>
+          <div class="form-group flex-checkbox">
+            <label class="toggle-switch">
+              <input type="checkbox" id="cfg-promo-enable">
+              <span class="slider"></span>
+            </label>
+            <span>Enable Announcement Banner on Website</span>
+          </div>
+          <div class="form-group">
+            <label for="cfg-promo-text">Banner Announcement Text</label>
+            <textarea id="cfg-promo-text" rows="3" placeholder="e.g. 🎉 Special Offer: Get 20% OFF on Swedish & Deep Tissue Massages this week! Book via WhatsApp."></textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: HERO & STAT NUMBERS -->
+      <section class="admin-tab-content" id="tab-hero">
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3>Hero Headline & Animated Counter Stats</h3>
+            <p>Customize hero titles and the four numerical achievements shown on the homepage.</p>
+          </div>
+          <div class="form-group">
+            <label for="cfg-hero-title">Hero Main Title (HTML allowed for highlighted words)</label>
+            <input type="text" id="cfg-hero-title" placeholder="Professional <span>Massage Services</span> in Riyadh">
+          </div>
+          <div class="form-group">
+            <label for="cfg-hero-desc">Hero Description</label>
+            <textarea id="cfg-hero-desc" rows="2"></textarea>
+          </div>
+          <hr class="admin-divider">
+          <h4>Hero Animated Stat Numbers</h4>
+          <div class="admin-grid-2">
+            <div class="form-group">
+              <label for="cfg-stat-clients">Happy Clients Target Count</label>
+              <input type="number" id="cfg-stat-clients" placeholder="5000">
+            </div>
+            <div class="form-group">
+              <label for="cfg-stat-years">Years Experience</label>
+              <input type="number" id="cfg-stat-years" placeholder="10">
+            </div>
+            <div class="form-group">
+              <label for="cfg-stat-therapists">Expert Therapists</label>
+              <input type="number" id="cfg-stat-therapists" placeholder="15">
+            </div>
+            <div class="form-group">
+              <label for="cfg-stat-services">Service Types Count</label>
+              <input type="number" id="cfg-stat-services" placeholder="8">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: SERVICES & PRICING -->
+      <section class="admin-tab-content" id="tab-pricing">
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3>Massage Services Pricing & Images</h3>
+            <p>Adjust pricing numbers (in SAR) and service image paths/URLs.</p>
+          </div>
+          <div class="admin-grid-2">
+            <div class="form-group">
+              <label for="cfg-price-swedish">Swedish Massage Price (SAR)</label>
+              <input type="text" id="cfg-price-swedish" placeholder="e.g. 250 SAR / 60 min">
+            </div>
+            <div class="form-group">
+              <label for="cfg-img-swedish">Swedish Massage Image (Path / URL)</label>
+              <input type="text" id="cfg-img-swedish" placeholder="e.g. images/swedish.png or https://...">
+            </div>
+            <div class="form-group">
+              <label for="cfg-price-deeptissue">Deep Tissue Price (SAR)</label>
+              <input type="text" id="cfg-price-deeptissue" placeholder="e.g. 300 SAR / 60 min">
+            </div>
+            <div class="form-group">
+              <label for="cfg-img-deeptissue">Deep Tissue Image (Path / URL)</label>
+              <input type="text" id="cfg-img-deeptissue" placeholder="e.g. images/deep-tissue.png or https://...">
+            </div>
+            <div class="form-group">
+              <label for="cfg-price-thai">Thai Massage Price (SAR)</label>
+              <input type="text" id="cfg-price-thai" placeholder="e.g. 280 SAR / 60 min">
+            </div>
+            <div class="form-group">
+              <label for="cfg-img-thai">Thai Massage Image (Path / URL)</label>
+              <input type="text" id="cfg-img-thai" placeholder="e.g. images/thai.png or https://...">
+            </div>
+            <div class="form-group">
+              <label for="cfg-price-sports">Sports Massage Price (SAR)</label>
+              <input type="text" id="cfg-price-sports" placeholder="e.g. 280 SAR / 60 min">
+            </div>
+            <div class="form-group">
+              <label for="cfg-img-sports">Sports Massage Image (Path / URL)</label>
+              <input type="text" id="cfg-img-sports" placeholder="e.g. images/sports.png or https://...">
+            </div>
+            <div class="form-group">
+              <label for="cfg-price-couples">Couples Package Price (SAR)</label>
+              <input type="text" id="cfg-price-couples" placeholder="e.g. 550 SAR / 90 min">
+            </div>
+            <div class="form-group">
+              <label for="cfg-img-couples">Couples Package Image (Path / URL)</label>
+              <input type="text" id="cfg-img-couples" placeholder="e.g. images/couples.png or https://...">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Floating Bottom Sticky Actions Bar -->
+      <div class="admin-save-bar">
+        <div class="save-bar-info">
+          <button id="admin-reset-btn" class="btn btn--outline btn--small">🔄 Reset Defaults</button>
+        </div>
+        <button id="admin-save-btn" class="btn btn--primary">💾 Save All Changes</button>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+
+</html>
