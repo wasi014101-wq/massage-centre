@@ -2235,4 +2235,19 @@ input:checked + .slider:before {
   color: #ffffff;
 }
 
+/* Subtle Hidden Admin Link in Footer */
+.hidden-admin-link {
+  opacity: 0.25;
+  font-size: 0.85rem;
+  margin-left: 10px;
+  text-decoration: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  display: inline-block;
+}
+
+.hidden-admin-link:hover {
+  opacity: 1;
+  transform: rotate(45deg);
+}
+
 
