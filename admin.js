@@ -201,6 +201,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (document.getElementById('cfg-title-couples')) document.getElementById('cfg-title-couples').value = config.title_couples || '';
     if (document.getElementById('cfg-desc-couples')) document.getElementById('cfg-desc-couples').value = config.desc_couples || '';
     if (document.getElementById('cfg-price-couples')) document.getElementById('cfg-price-couples').value = config.price_couples || '';
+    if (document.getElementById('cfg-img-couples')) document.getElementById('cfg-img-couples').value = config.img_couples || 'images/couples.png';
+  }
+
   function getFormConfig() {
     const storedPasscode = localStorage.getItem(PASSCODE_KEY) || activeConfig.admin_passcode || 'admin123';
     return {
