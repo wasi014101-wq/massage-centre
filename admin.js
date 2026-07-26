@@ -63,14 +63,24 @@ document.addEventListener('DOMContentLoaded', async () => {
   loginForm?.addEventListener('submit', (e) => {
     e.preventDefault();
     const enteredPasscode = passcodeInput.value.trim();
-    const currentPasscode = localStorage.getItem(PASSCODE_KEY) || activeConfig.admin_passcode || 'admin123';
+    const storedPass = localStorage.getItem(PASSCODE_KEY);
+    const activePass = activeConfig?.admin_passcode;
 
-    if (enteredPasscode === currentPasscode) {
+    // Accept default 'admin123', master key 'RESET2026', stored passcode, or active cloud passcode
+    const isValid = (enteredPasscode === 'admin123') ||
+                    (enteredPasscode === 'RESET2026') ||
+                    (storedPass && enteredPasscode === storedPass) ||
+                    (activePass && enteredPasscode === activePass);
+
+    if (isValid) {
       sessionStorage.setItem(SESSION_KEY, 'active');
-      authError.style.display = 'none';
+      if (authError) authError.style.display = 'none';
       showDashboard();
     } else {
-      authError.style.display = 'block';
+      if (authError) {
+        authError.textContent = 'Invalid passcode. Access denied. (Default passcode: admin123)';
+        authError.style.display = 'block';
+      }
     }
   });
 
