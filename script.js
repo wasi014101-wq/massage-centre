@@ -226,9 +226,20 @@ document.addEventListener('DOMContentLoaded', () => {
     stat_services: 8
   };
 
-  function applyDynamicConfig() {
+  async function applyDynamicConfig() {
+    let globalCfg = {};
+    try {
+      const res = await fetch('site_config.json?v=' + Date.now());
+      if (res.ok) {
+        globalCfg = await res.json();
+      }
+    } catch (e) {
+      // Fallback if site_config.json is missing or offline
+    }
+
     const raw = localStorage.getItem(CONFIG_KEY);
-    const cfg = raw ? { ...DEFAULT_CONFIG, ...JSON.parse(raw) } : { ...DEFAULT_CONFIG };
+    const localCfg = raw ? JSON.parse(raw) : {};
+    const cfg = { ...DEFAULT_CONFIG, ...globalCfg, ...localCfg };
 
     // Update Brand Name everywhere
     const brandName = cfg.brand_name || 'Serenity Spa';

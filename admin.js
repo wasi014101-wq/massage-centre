@@ -194,10 +194,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     localStorage.setItem(CONFIG_KEY, JSON.stringify(currentConfig));
-    showToast('✅ Settings saved! Website information updated.');
+    showToast('✅ Settings saved locally! Click "Export site_config.json" to publish changes to all devices.');
   }
 
   saveBtn?.addEventListener('click', saveConfigFromForm);
+
+  // Export site_config.json for live global website
+  const exportJsonBtn = document.getElementById('admin-export-json-btn');
+  exportJsonBtn?.addEventListener('click', () => {
+    saveConfigFromForm();
+    const config = localStorage.getItem(CONFIG_KEY) || JSON.stringify(DEFAULT_CONFIG, null, 2);
+    const blob = new Blob([config], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'site_config.json';
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('📥 site_config.json downloaded! Upload this file to GitHub to publish changes globally.');
+  });
 
   // Reset to Defaults
   resetBtn?.addEventListener('click', () => {

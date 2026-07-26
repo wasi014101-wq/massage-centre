@@ -1,0 +1,20 @@
+{
+  "brand_name": "Serenity Spa",
+  "whatsapp_number": "966501234567",
+  "phone_display": "+966 50 123 4567",
+  "address": "Olaya Street, Riyadh, Saudi Arabia",
+  "hours": "Daily: 10 AM – 12 AM",
+  "promo_enabled": false,
+  "promo_text": "🎉 Special Offer: Book today and get 20% OFF on all relaxation packages!",
+  "hero_title": "Professional <span>Massage Services</span> in Riyadh",
+  "hero_desc": "Relax your body, relieve stress, and enjoy premium massage services with experienced therapists. Your journey to complete relaxation starts here.",
+  "stat_clients": 5000,
+  "stat_years": 10,
+  "stat_therapists": 15,
+  "stat_services": 8,
+  "img_swedish": "images/swedish.png",
+  "img_deeptissue": "images/deep-tissue.png",
+  "img_thai": "images/thai.png",
+  "img_sports": "images/sports.png",
+  "img_couples": "images/couples.png"
+}
