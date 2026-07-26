@@ -227,23 +227,23 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const CLOUD_BIN_DEFAULT = '6699d8e7e41b4d34e414c5b1';
-  const CLOUD_KEY_DEFAULT = '$2a$10$7Z8H19o9.X7a/WpG1pE30.fD';
+  const LIVE_CLOUD_DB_URL = 'https://api.restful-api.dev/objects/ff8081819f7e10ae019f9e67836a2b88';
 
   async function applyDynamicConfig() {
     let globalCfg = {};
 
-    // 1. Direct Vercel Cloud Database API (Direct, live, 0-manual-upload sync on Vercel)
+    // 1. Live Cloud Database Sync (0 GitHub / 0 file uploads required!)
     try {
-      const vercelRes = await fetch('/api/config');
-      if (vercelRes.ok) {
-        const vercelData = await vercelRes.json();
-        if (vercelData && Object.keys(vercelData).length > 0) {
-          globalCfg = vercelData;
+      const res = await fetch(LIVE_CLOUD_DB_URL);
+      if (res.ok) {
+        const json = await res.json();
+        if (json && json.data && Object.keys(json.data).length > 0) {
+          globalCfg = json.data;
         }
       }
     } catch (e) {}
 
-    // 2. Fallback Config: site_config.json
+    // 2. Local/Static Fallback: site_config.json
     if (!globalCfg || !Object.keys(globalCfg).length) {
       try {
         const res = await fetch('site_config.json?v=' + Date.now());
@@ -255,8 +255,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const raw = localStorage.getItem(CONFIG_KEY);
     const localCfg = raw ? JSON.parse(raw) : {};
-    // Server-fetched globalCfg (site_config.json) takes top priority so all devices receive live updates!
-    const cfg = { ...DEFAULT_CONFIG, ...localCfg, ...globalCfg };
+    // Merge order: DEFAULT -> Server (site_config.json) -> Local Admin Edits (take top priority locally)
+    const cfg = { ...DEFAULT_CONFIG, ...globalCfg, ...localCfg };
 
     // Update Brand Name everywhere
     const brandName = cfg.brand_name || 'Serenity Spa';

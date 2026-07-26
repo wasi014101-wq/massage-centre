@@ -246,22 +246,27 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
   }
 
+  const LIVE_CLOUD_DB_URL = 'https://api.restful-api.dev/objects/ff8081819f7e10ae019f9e67836a2b88';
+
   async function pushToCloudDatabase(currentConfig) {
-    // Direct Vercel Cloud Sync (0 manual uploads required!)
+    // 100% Direct Cloud Database Update (0 GitHub / 0 file uploads required!)
     try {
-      const vercelRes = await fetch('/api/config', {
-        method: 'POST',
+      const res = await fetch(LIVE_CLOUD_DB_URL, {
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(currentConfig)
+        body: JSON.stringify({
+          name: 'massageriyad_config',
+          data: currentConfig
+        })
       });
 
-      if (vercelRes.ok) {
-        showToast('🚀 DIRECTLY SAVED TO VERCEL CLOUD! All devices & visitors worldwide updated instantly.');
+      if (res.ok) {
+        showToast('🚀 SAVED DIRECTLY TO CLOUD DATABASE! All visitors worldwide updated live instantly.');
         return;
       }
     } catch (e) {}
 
-    showToast('✅ Saved locally! Click "Export site_config.json" to sync manually if offline.');
+    showToast('✅ Saved locally in browser.');
   }
 
   async function saveConfigFromForm() {
